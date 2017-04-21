@@ -3,7 +3,7 @@ class CreateDocuments < ActiveRecord::Migration[5.0]
     create_table :documents do |t|
       t.string :title, :null => false
       t.text :content
-      t.integer :tag_id
+      t.integer :user_id
       t.timestamps
     end
   end

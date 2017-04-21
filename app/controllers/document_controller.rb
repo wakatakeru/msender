@@ -1,3 +1,4 @@
+# coding: utf-8
 class DocumentController < ApplicationController
 
   before_action :login_check
@@ -12,7 +13,6 @@ class DocumentController < ApplicationController
   
   def new
     @document = Document.new
-    @tags = Tag.all
   end
 
   def create
@@ -20,13 +20,8 @@ class DocumentController < ApplicationController
     
     document.title     = params['document']['title']
     document.content   = params['document']['content']
+    document.user      = current_user
     
-    if params['document']['tag_id']
-      document.tag_id  = params['document']['tag_id']
-    else
-      document.tag_id  = Tag.first.id
-    end
-
     if document.save
       flash[:success] = "ドキュメントを保存しました"
       redirect_to document_index_path
@@ -48,12 +43,7 @@ class DocumentController < ApplicationController
     
     document.title   = params['document']['title']
     document.content = params['document']['content']
-    if params['document']['tag_id']
-      document.tag_id  = params['document']['tag_id']
-    else
-      document.tag_id  = Tag.first.id
-    end
-
+    
     if document.save
       flash[:success] = "ドキュメントの更新に成功しました"
       redirect_to document_index_path
@@ -67,23 +57,7 @@ class DocumentController < ApplicationController
   end
 
   def download
-    document = Document.find(params['id'].to_i)
-    title = document.title
-    out = Prawn::Document.new(:page_size => 'A4') do
-      font "app/assets/fonts/light.ttf"
-      
-      draw_text "#{document.title}" ,
-                :size => 20, :at => [30, 740]
-      stroke_color 'A4A4A4'
-      stroke_horizontal_line 0, 540, :at=> 730
 
-      font "app/assets/fonts/regular.ttf"
-      
-      text_box "#{document.content}" ,
-               :size => 10, :at => [30, 700], :width => 470, :height => 680
-    end
-
-    send_data(out.render, :filename => "#{document.title}.pdf")
   end
   
   def destroy

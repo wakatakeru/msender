@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
-
+  has_many :documents
   validates :login_id,
             :presence => true,
             :uniqueness => true,

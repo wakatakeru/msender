@@ -1,10 +1,9 @@
 <div class="container">
   <h1>
     <div>
-      ドキュメント詳細 <small>Tag: <%= @document.tag.name %></small>
+      ドキュメント詳細
       <div class="btn-group pull-right">
         <%= link_to '編集', edit_document_path(@document.id), :class => 'btn btn-success'%>
-        <%= link_to 'PDF出力', "/document/#{@document.id}/download", :class => 'btn btn-info'%>
         <%= link_to '削除', document_path(@document.id), :method => :delete, :class => 'btn btn-danger'%>
       </div>
     </div>
