@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <h1><%= @user.screen_name %> さん</h1>
+    <hr>
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>表示名</th>
+        <th>ロール</th>
+      </tr>
+      <tr>
+        <td><%= @user.login_id %></td>
+        <td><%= @user.screen_name %></td>
+        <% if @user.is_admin == true %>
+          <td>管理者</td>
+        <% else %>
+          <td>一般ユーザ</td>
+        <% end %>
+      </tr>
+    </table>
+</div>

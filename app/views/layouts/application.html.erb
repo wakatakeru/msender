@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ArCdoc</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarMain">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to 'ArCdoc', '/root/index', :class => 'navbar-brand' %>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarMain">
+          <% if is_login %>
+          <ul class="nav navbar-nav">
+            <li><%= link_to 'ドキュメント一覧', '/document' %></li>
+            <li><%= link_to 'タグ一覧', '/tag' %></li>
+            <% if current_user.is_admin == true %>
+            <li><%= link_to 'ユーザ管理', '/user' %></li>
+            <% end %>
+          </ul>
+          <% end %>
+          <% if is_login %>
+          <ul class="nav navbar-nav navbar-right">
+            <%= link_to "#{current_user.screen_name}", user_path(current_user.id) %>さん
+            <%= link_to 'ログアウト', '/login', :method => :delete, :class => 'btn btn-danger navbar-btn'%>
+          </ul>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
+    </div>
+    <%= yield %>
+  </body>
+</html>

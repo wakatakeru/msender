@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="text-center">
+    <h1>ArCdoc</h1>
+    <hr>
+    <h2>Login</h2>
+  </div>
+  <div class="center-block">
+    <div class="col-sm-4 col-sm-offset-4">
+      <%= form_tag login_path do %>
+      <div class="form-group">
+        <p>ログインID<p>
+        <%= text_field_tag :login_id, params[:login_id], :class => 'form-control'%>
+      </div>
+      <div class="form-group">
+        <p>パスワード<p>
+        <%= password_field_tag :password, params[:password], :class => 'form-control'%>
+      </div >
+      <div class="form-group">
+        <%= submit_tag 'ログイン', :class => 'btn btn-primary btn-block' %>
+      </div>
+      <% end %>
+      <%= link_to 'ユーザ作成', new_user_path, :class => 'btn btn-success btn-block'%>
+    </div>
+  </div>
+</div>
+  

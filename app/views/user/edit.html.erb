@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="text-center">
+    <h1>ユーザ情報更新</h1>
+  </div>
+  <div class="col-sm-4 col-sm-offset-4">
+    <%= form_for @user, :url => user_path(@user) do |f| %>
+    <div class="form-group">
+      <%= f.label :screen_name, '表示名', :class => 'control-label'%>
+      <%= f.text_field :screen_name, :class => 'form-control'%>
+    </div>
+    <div class="form-group">
+      <%= f.label :password, 'パスワード', :class => 'control-label'%>
+      <%= f.password_field :password, :class => 'form-control'%>
+    </div >
+    <div class="form-group">
+      <%= f.label :password_confirmation, 'パスワード確認', :class => 'control-label'%>
+      <%= f.password_field :password_confirmation, :class => 'form-control'%>
+    </div >
+    <% if current_user.is_admin == true && @user != current_user %>
+    <div class="form-group">
+      <%= f.label :is_admin, '管理者権限', :class => 'control-label'%>
+      <%= f.check_box :is_admin, :class => 'checkbox'%>
+    </div >
+    <% end %>
+    <div class="form-group">
+      <%= f.submit 'ユーザ情報更新', :class => 'btn btn-success btn-block' %>
+    </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="text-center">
+    <h1>ArCdoc</h1>
+    <h2><b>Ar</b>chive<b>C</b>ircle<b>doc</b>uments</h2>
+    <hr>
+    <div class="form-group">
+    <form action="/root/index" method="get" class="form-inline">
+      <p>検索</p>
+      <input type="text" name="title_q" placeholder="タイトル" class="form-control">
+      <input type="text" name="content_q" placeholder="内容" class="form-control">
+      <input type="submit" value="検索" class="form-control">
+    </form>
+    </div>
+    <hr>
+    <% if @count != 0 %>
+    <p><b><%= @count %>件</b>ヒットしました</p>
+    <% else %>
+    <p><span style="color:red">ヒットする項目がありませんでした</span></p>
+    <% end %>
+    <table class="table table-hover">
+    <tr>
+      <th>タイトル</th>
+      <th>タグ</th>
+    </tr>
+    <% @documents.each do |i| %>
+      <tr>
+        <td><%= link_to i.title, document_path(i.id) %></td>
+        <td><%= link_to i.tag.name, tag_path(i.tag.id) %></td>
+      </tr>
+    <% end %>
+    </table>
+</div>

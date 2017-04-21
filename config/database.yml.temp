@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode          
+  pool: 5
+  timeout: 5000
+
+  username: arcdoc
+  password: username
+
+  host: localhost
+
+development:
+  <<: *default
+  database: arcdoc_development
+
+test:
+  <<: *default
+  database: arcdoc_test

@@ -1,0 +1,17 @@
+<h1>ドキュメントの編集</h1>
+
+<%= form_for @document, :url => document_path(@document) do |f| %>
+  <div>
+    <%= f.label :title, 'タイトル' %>
+  </div>
+  <div>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :content, '本文' %>
+  </div>
+  <div>
+    <%= f.text_area  :content %>
+  </div>
+    <%= f.submit('更新') %>
+<% end %>
