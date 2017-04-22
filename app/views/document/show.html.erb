@@ -4,6 +4,7 @@
       ドキュメント詳細
       <div class="btn-group pull-right">
         <%= link_to '編集', edit_document_path(@document.id), :class => 'btn btn-success'%>
+        <%= link_to 'メール送信', "/document/#{@document.id}/send_mail", :class => 'btn btn-warning', :data => {:confirm => 'メールを送信します。よろしいですか？'} %>
         <%= link_to '削除', document_path(@document.id), :method => :delete, :class => 'btn btn-danger'%>
       </div>
     </div>

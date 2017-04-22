@@ -56,8 +56,13 @@ class DocumentController < ApplicationController
     end
   end
 
-  def download
-
+  def send_mail
+    doc = Document.find(params['id'].to_i)
+    doc_title = doc.title.to_s
+    doc_body  = doc.content.to_s
+    MailerMailer.send_minutes(doc_title, doc_body).deliver
+    flash['info'] = "メール #{doc_title} を送信しました"
+    redirect_to document_index_path
   end
   
   def destroy

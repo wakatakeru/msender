@@ -1,0 +1,14 @@
+class MailerMailer < ApplicationMailer
+
+  # Subject can be set in your I18n file at config/locales/en.yml
+  # with the following lookup:
+  #
+  #   en.mailer_mailer.send_minutes.subject
+  #
+  def send_minutes(doc_title, doc_content)
+    @content = doc_content
+    
+    mail :to => "to@example.com",
+         :subject => doc_title
+  end
+end

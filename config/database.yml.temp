@@ -4,15 +4,15 @@ default: &default
   pool: 5
   timeout: 5000
 
-  username: arcdoc
+  username: msender
   password: username
 
   host: localhost
 
 development:
   <<: *default
-  database: arcdoc_development
+  database: msender_development
 
 test:
   <<: *default
-  database: arcdoc_test
+  database: msender_test

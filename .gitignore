@@ -18,6 +18,8 @@ pickle-email-*.html
 
 /config/database.yml
 /config/environments/development.rb
+/app/mailers/mailer_mailer.rb
+/app/mailers/application_mailer.rb
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
