@@ -21,6 +21,7 @@ class DocumentController < ApplicationController
     document.title     = params['document']['title']
     document.content   = params['document']['content']
     document.user      = current_user
+    document.is_send   = false
     
     if document.save
       flash[:success] = "ドキュメントを保存しました"
@@ -43,6 +44,7 @@ class DocumentController < ApplicationController
     
     document.title   = params['document']['title']
     document.content = params['document']['content']
+    document.is_send = params['document']['is_send']
     
     if document.save
       flash[:success] = "ドキュメントの更新に成功しました"
@@ -57,12 +59,29 @@ class DocumentController < ApplicationController
   end
 
   def send_mail
-    doc = Document.find(params['id'].to_i)
-    doc_title = doc.title.to_s
-    doc_body  = doc.content.to_s
-    MailerMailer.send_minutes(doc_title, doc_body).deliver
-    flash['info'] = "メール #{doc_title} を送信しました"
-    redirect_to document_index_path
+    document = Document.find(params['id'].to_i)
+
+    if document.is_send
+      flash['danger'] = 'このメールは送信済みです'
+      redirect_to document_index_path
+    end
+
+    document_title = document.title.to_s
+    document_body  = document.content.to_s
+    document.is_send = true
+
+    if document.save == false
+      flash['danger'] = "メール #{document_title} の送信に失敗しました"
+      redirect_to document_index_path and return
+    end
+    
+    if MailerMailer.send_minutes(document_title, document_body).deliver
+      flash['info'] = "メール #{document_title} を送信しました"
+      redirect_to document_index_path and return
+    else
+      flash['danger'] = "メール #{document_title} の送信に失敗しました"
+      redirect_to document_index_path and return
+    end
   end
   
   def destroy

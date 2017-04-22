@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170418160816) do
     t.string   "title",      null: false
     t.text     "content"
     t.integer  "user_id"
+    t.boolean  "is_send"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
