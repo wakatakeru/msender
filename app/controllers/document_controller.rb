@@ -61,26 +61,27 @@ class DocumentController < ApplicationController
   def send_mail
     document = Document.find(params['id'].to_i)
 
-    if document.is_send
-      flash['danger'] = 'このメールは送信済みです'
-      redirect_to document_index_path
-    end
-
     document_title = document.title.to_s
     document_body  = document.content.to_s
+    before_is_send = document.is_send
     document.is_send = true
-
-    if document.save == false
-      flash['danger'] = "メール #{document_title} の送信に失敗しました"
-      redirect_to document_index_path and return
-    end
     
-    if MailerMailer.send_minutes(document_title, document_body).deliver
-      flash['info'] = "メール #{document_title} を送信しました"
-      redirect_to document_index_path and return
+    if current_user.is_admin
+      if document.save && before_is_send == false
+        MailerMailer.send_minutes(document_title, document_body).deliver
+        flash['info'] = "メール #{document_title} を送信しました"
+        @document = document
+        render 'show' and return
+      else
+        flash['danger'] = "メール #{document_title} の送信に失敗しました"
+        @document = document
+        render 'show' and return
+      end
     else
-      flash['danger'] = "メール #{document_title} の送信に失敗しました"
-      redirect_to document_index_path and return
+      flash['danger'] = "メールの送信権限がありません"
+      @document = document
+      @document.is_send = false
+      render 'show' and return
     end
   end
   
